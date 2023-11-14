@@ -57,7 +57,8 @@ function registrar_api_usuario_post()
 
   register_rest_route('api', '/usuario', array(
     array(
-      'methods' => 'POST',
+      // 'methods' => 'POST',
+      'methods' => WP_REST_Server::CREATABLE,
       'callback' => 'api_usuario_post'
     )
   ));
