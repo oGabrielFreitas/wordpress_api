@@ -20,15 +20,30 @@ function api_usuario_post($request)
   // Se não existir
   if(!$user_exists && !$email_exists && $email && $password) {
 
-    wp_create_user( $username, $password, $email );
+    $user_id = wp_create_user( $username, $password, $email );
+
+    //$user = get_user_by( 'login' , $username ); // $user->data->ID (MÉTODO ALTERNATIVO PARA BUSCAR USUÁRIO)
+
+
+    $response = array(
+      'ID' => $user_id,
+      'display_name' => $name,
+      'first_name' => $name,
+      'role' => 'subscriber',
+    );
+
+    wp_update_user($response);
+
+    // Método para adicionar campos extras ao usuário
+    // Estes campos não aparecem dentro do WP, mas vão para o banco de dados
+    update_user_meta($user_id, 'Address', $address);
+    update_user_meta($user_id, 'Age', $age);
+
 
   }
-
-
-  $response = array(
-    'nome' => $name,
-    'email' => $email,
-  );
+  else {
+    $response = new WP_Error('email', 'Email já cadastrado', array('status' => 403));
+  }
 
   return rest_ensure_response($response);
 }
