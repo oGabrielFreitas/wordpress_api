@@ -1,0 +1,40 @@
+## User Stories
+
+1. Eu, como admin, quero ser capaz de acessar as respostas dos usuários em uma lista
+
+2. Eu como admin, quero ser capaz de fazer login na minha conta, criada internamente.
+
+3. Eu como usuário do site, quero ser capaz de preencher o quiz e receber a resposta em meu email.
+
+4. Eu como admin, quero ser informado por e-mail, sempre que um usuário do site responder o meu quiz.
+
+## Classes e Modelos
+
+### Reports
+
+Atributos:
+
+1. Nome
+2. Idade
+3. Data da Resposta
+4. Array Resposta
+
+Funções:
+
+1. Criar
+2. Alterar
+3. Deletar
+4. Listar
+
+.
+
+## Respostas
+
+O formulário envia a resposta com a string inteira.
+Então terei que formatar as repostas em: A, B e C, sendo:
+
+A -> Resposta ruim
+
+B -> Resposta neutra
+
+C -> Resposta boa

@@ -12,6 +12,8 @@ function api_pdf_generator($request) {
 
     // Adiciona o texto "Hello World"
     $pdf->Cell(40, 10, 'Hello World');
+    $pdf->Cell(40, 10, 'Vini 12');
+
 
     // Saída do PDF
     // Você pode querer salvar o PDF em um arquivo, ou talvez enviar diretamente como resposta
