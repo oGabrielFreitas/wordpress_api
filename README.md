@@ -38,3 +38,5 @@ A -> Resposta ruim
 B -> Resposta neutra
 
 C -> Resposta boa
+
+Problema: Não posso randomizar as respostas.

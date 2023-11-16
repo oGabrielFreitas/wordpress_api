@@ -1,10 +1,10 @@
 <?php
 /**
- * @package GabrielPlugin
+ * @package LanceNoDigital.Medical-ILS-API-Plugin
  */
 
 /*
- * Plugin Name:       PDF PLUGIN CERTO
+ * Plugin Name:       ILS API
  * Plugin URI:        https://example.com/plugins/the-basics/
  * Description:       Handle the basics with this plugin.
  * Version:           1.10.3
@@ -20,28 +20,31 @@
  */
 
 
-if ( ! defined('ABSPATH')){
-  echo 'There is some ABSPATH problem in your Wordpress';
-  die;
+defined ('ABSPATH') or die ('Hey, what are you trying to do here?');
+
+if (file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' )){
+  require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 }
 
 
-class PdfApi{
+
+// if ( class_exists( 'src\\Init')){
+//   src\Init;
+// }
+
+
+
+class IlsApi{
 
   function __construct(){
-
-
-
-
 
   }
 
   function activate(){
 
-    $this->custom_post_type(); // Não necessário, mas evita bugs
+    // $this->custom_post_type(); // Não necessário, mas evita bugs ela cria os custom para serem init depois.
     // flush rewrite rules
     flush_rewrite_rules();
-
   }
 
   function deactivate(){
@@ -54,11 +57,8 @@ class PdfApi{
   }
 
   function start(){
-    $this->create_post_type();
-    require_once plugin_dir_path( __FILE__ ) . '/custom-post-type/produto.php';
-
-    require_once plugin_dir_path( __FILE__ ) . '/endpoints/pdf_generator.php';
-
+    // $this->create_post_type();
+    src\routes\InitRoutes::register();
 
   }
 
@@ -92,14 +92,16 @@ class PdfApi{
 
 }
 
-if (class_exists('PdfApi')) {
-  $PdfApi = new PdfApi();
-  // $PdfApi->register();
-  $PdfApi->start();
+if (class_exists('IlsApi')) {
+  $IlsApi = new IlsApi();
+  // $IlsApi->register();
+  $IlsApi->start();
 }
 
-register_activation_hook( __FILE__, array( $PdfApi , 'activate') );
-register_deactivation_hook( __FILE__, array( $PdfApi , 'deactivate') );
+register_activation_hook( __FILE__, array( $IlsApi , 'activate') );
+register_deactivation_hook( __FILE__, array( $IlsApi , 'deactivate') );
+
+
 
 // Function to JWT Token expire time
 function api_expire_token(){
@@ -118,16 +120,16 @@ add_action('jwt_auth_expire', 'api_expire_token');
 
 
 
-$plugin_dir = WP_PLUGIN_DIR . '/pdf-api';
+// $plugin_dir = WP_PLUGIN_DIR . '/pdf-api';
 
 
-require_once($plugin_dir . "/custom-post-type/produto.php");
-require_once($plugin_dir . "/custom-post-type/transacao.php");
+// require_once($plugin_dir . "/custom-post-type/produto.php");
+// require_once($plugin_dir . "/custom-post-type/transacao.php");
 
-require_once($plugin_dir . "/endpoints/usuario_post.php");
-require_once($plugin_dir . "/endpoints/usuario_get.php");
-// require_once($plugin_dir . "/endpoints/pdf_generator.php");
-require_once($plugin_dir . "/endpoints/forms-test.php");
+// require_once($plugin_dir . "/endpoints/usuario_post.php");
+// require_once($plugin_dir . "/endpoints/usuario_get.php");
+// // require_once($plugin_dir . "/endpoints/pdf_generator.php");
+// require_once($plugin_dir . "/endpoints/forms-test.php");
 
 
 
