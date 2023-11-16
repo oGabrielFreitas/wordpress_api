@@ -11,6 +11,7 @@ function api_usuario_post($request)
   $name = sanitize_text_field( $request['name'] );
   $address = sanitize_text_field( $request['address'] );
   $age = sanitize_text_field( $request['age'] );
+  $q_social_1 = $request['q_social_1'];
 
 
   // Verifica se o usuário já existe (função Wordpress)
@@ -27,8 +28,8 @@ function api_usuario_post($request)
 
     $response = array(
       'ID' => $user_id,
-      'display_name' => $name,
-      'first_name' => $name,
+      'display_name' => $q_social_1,
+      'first_name' => $q_social_1,
       'role' => 'subscriber',
     );
 

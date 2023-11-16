@@ -1,14 +1,24 @@
 <?php
+/**
+ * @package LanceNoDigital.Medical-ILS-API-Plugin
+ */
+
+namespace src\services\reports;
 
 
-require_once plugin_dir_path( __DIR__ ) . 'vendor/setasign/fpdf/fpdf.php';
-
-// require_once __DIR__ . '/vendor/autoload.php';
+// require_once WP_PLUGIN_DIR . '/pdf-api/vendor/setasign/fpdf/fpdf.php';
 
 
-function api_pdf_generator($request) {
+
+class PdfGenerator{
+
+  function __construct(){
+    // echo '_PDF INICIADO';
+  }
+
+  public static function handle($request) {
     // Cria um novo documento PDF
-    $pdf = new FPDF();
+    $pdf = new \FPDF();
     $pdf->AddPage();
     $pdf->SetFont('Arial', 'B', 16);
 
@@ -32,12 +42,7 @@ function api_pdf_generator($request) {
 
     // Encerrar script para evitar enviar dados adicionais após o PDF
     exit;
+  }
+
 }
 
-// Registro da rota da API
-add_action('rest_api_init', function () {
-    register_rest_route('api', '/pdf', array(
-        'methods' => 'GET',
-        'callback' => 'api_pdf_generator'
-    ));
-});

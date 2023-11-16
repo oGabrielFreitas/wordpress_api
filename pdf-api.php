@@ -1,7 +1,10 @@
 <?php
+/**
+ * @package LanceNoDigital.Medical-ILS-API-Plugin
+ */
 
 /*
- * Plugin Name:       PDF PLUGIN
+ * Plugin Name:       ILS API
  * Plugin URI:        https://example.com/plugins/the-basics/
  * Description:       Handle the basics with this plugin.
  * Version:           1.10.3
@@ -17,17 +20,86 @@
  */
 
 
-$plugin_dir = WP_PLUGIN_DIR . '/pdf-api';
+defined ('ABSPATH') or die ('Hey, what are you trying to do here?');
+
+if (file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' )){
+  require_once dirname( __FILE__ ) . '/vendor/autoload.php';
+}
 
 
-require_once($plugin_dir . "/custom-post-type/produto.php");
-require_once($plugin_dir . "/custom-post-type/transacao.php");
 
-require_once($plugin_dir . "/endpoints/usuario_post.php");
-require_once($plugin_dir . "/endpoints/usuario_get.php");
-require_once($plugin_dir . "/endpoints/pdf_generator.php");
-require_once($plugin_dir . "/endpoints/forms-test.php");
+// if ( class_exists( 'src\\Init')){
+//   src\Init;
+// }
 
+
+
+class IlsApi{
+
+  function __construct(){
+
+  }
+
+  function activate(){
+
+    // $this->custom_post_type(); // Não necessário, mas evita bugs ela cria os custom para serem init depois.
+    // flush rewrite rules
+    flush_rewrite_rules();
+  }
+
+  function deactivate(){
+
+  }
+
+  function uninstall(){
+
+
+  }
+
+  function start(){
+    // $this->create_post_type();
+    src\routes\InitRoutes::register();
+
+  }
+
+
+
+  function create_post_type(){
+    add_action( 'init', array( $this, 'custom_post_type') );
+
+  }
+
+
+  // Funções potencialmente úteis, que aprendi no curso
+
+  function custom_post_type(){
+    register_post_type( 'book', ['public' => true, 'label' => 'Books', 'show_ui' => true] );
+
+
+  }
+
+  function register() {
+    add_action ('admin_enqueue_scripts', array($this, 'enqueue'));
+
+  }
+
+  function enqueue() {
+    // Enfileirar todos meus scripts.
+    wp_enqueue_style( 'mypluginstyle', plugins_url( '/src/scripts/mystyle.css', __FILE__ ) );
+    wp_enqueue_script( 'mypluginscript', plugins_url( '/src/scripts/myscript.js', __FILE__ ) );
+
+  }
+
+}
+
+if (class_exists('IlsApi')) {
+  $IlsApi = new IlsApi();
+  // $IlsApi->register();
+  $IlsApi->start();
+}
+
+register_activation_hook( __FILE__, array( $IlsApi , 'activate') );
+register_deactivation_hook( __FILE__, array( $IlsApi , 'deactivate') );
 
 
 
@@ -37,5 +109,29 @@ function api_expire_token(){
 }
 
 add_action('jwt_auth_expire', 'api_expire_token');
+
+
+
+
+
+
+
+
+
+
+
+// $plugin_dir = WP_PLUGIN_DIR . '/pdf-api';
+
+
+// require_once($plugin_dir . "/custom-post-type/produto.php");
+// require_once($plugin_dir . "/custom-post-type/transacao.php");
+
+// require_once($plugin_dir . "/endpoints/usuario_post.php");
+// require_once($plugin_dir . "/endpoints/usuario_get.php");
+// // require_once($plugin_dir . "/endpoints/pdf_generator.php");
+// require_once($plugin_dir . "/endpoints/forms-test.php");
+
+
+
 
 ?>

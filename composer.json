@@ -1,0 +1,21 @@
+{
+    "name": "lancenodigital/llsapi",
+    "description": "A medical API to Wordpress, to a LLS Medical System",
+    "type": "api",
+    "minimum-stability": "dev",
+    "license": "GPL2",
+    "autoload": {
+        "psr-4": {
+            "src\\": "./src"
+        }
+    },
+    "authors": [
+        {
+            "name": "oGabrielFreitas",
+            "email": "ogabrielfreitas@gmail.com"
+        }
+    ],
+    "require": {
+      "setasign/fpdf": "^1.8"
+  }
+}
