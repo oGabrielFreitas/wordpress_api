@@ -19,6 +19,8 @@
  * Domain Path:       /languages
  */
 
+// namespace src;
+
 
 defined ('ABSPATH') or die ('Hey, what are you trying to do here?');
 
@@ -44,7 +46,9 @@ class IlsApi{
 
     // $this->custom_post_type(); // Não necessário, mas evita bugs ela cria os custom para serem init depois.
     // flush rewrite rules
-    flush_rewrite_rules();
+
+    src\services\Activation::register();
+
   }
 
   function deactivate(){
