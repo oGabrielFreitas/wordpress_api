@@ -9,7 +9,6 @@ use src\models\ReportsModel;
 
 
 
-
 class Activation{
 
   public static function register(){

@@ -31,6 +31,24 @@ class ReportsEndpoint{
 
   }
 
+  public function read($request){
+
+    $id = sanitize_text_field( $request['id'] );
+
+    $response = (new ReportsModel())->read( $id);
+
+    return rest_ensure_response( $response);
+  }
+
+
+  public function list($request){
+
+    $response = (new ReportsModel())->list_all();
+
+    return rest_ensure_response( $response);
+
+  }
+
 }
 
 
