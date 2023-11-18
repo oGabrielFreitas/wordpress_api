@@ -9,11 +9,6 @@ use src\services\reports\PdfGenerator;
 use src\endpoints\ReportsEndpoint;
 
 
-// require_once WP_PLUGIN_DIR . '/pdf-api/src/services/Reports/PdfGenerator.php';
-
-
-
-
 class ReportsRoutes{
 
   public static function register(){
