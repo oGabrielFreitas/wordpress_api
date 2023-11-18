@@ -1,3 +1,11 @@
+## Próximos passos
+
+- Aprender a criar tabelas personalizadas na wpdb (Chat GPT respondeu sobre isso)
+
+- Implementar um Crud de perguntas e respostas.
+
+- Assistir aquele vídeo sobre otimização de database. Tirar ideias também do Chat GPT.
+
 ## User Stories
 
 1. Eu, como admin, quero ser capaz de acessar as respostas dos usuários em uma lista
