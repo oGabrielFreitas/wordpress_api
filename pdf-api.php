@@ -19,22 +19,11 @@
  * Domain Path:       /languages
  */
 
-// namespace src;
-
-
 defined ('ABSPATH') or die ('Hey, what are you trying to do here?');
 
 if (file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' )){
   require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 }
-
-
-
-// if ( class_exists( 'src\\Init')){
-//   src\Init;
-// }
-
-
 
 class IlsApi{
 
