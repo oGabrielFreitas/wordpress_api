@@ -12,6 +12,8 @@ class InitRoutes{
   public static function register(){
 
     ReportsRoutes::register();
+    UsersRoutes::register();
+
 
   }
 

@@ -7,7 +7,7 @@
  * Plugin Name:       ILS API
  * Plugin URI:        https://example.com/plugins/the-basics/
  * Description:       Handle the basics with this plugin.
- * Version:           1.10.3
+ * Version:           2
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Lance no Digital
@@ -72,6 +72,11 @@ function api_expire_token(){
 
 add_action('jwt_auth_expire', 'api_expire_token');
 
+
+$plugin_dir = WP_PLUGIN_DIR . '/pdf-api';
+require_once($plugin_dir . "/endpoints/usuario_post.php");
+
+require_once($plugin_dir . "/custom-post-type/produto.php");
 
 
 

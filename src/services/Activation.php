@@ -6,6 +6,8 @@
 namespace src\services;
 
 use src\models\ReportsModel;
+use src\models\QuestionsModel;
+
 
 
 
@@ -22,6 +24,9 @@ class Activation{
   private static function create_app_tables() {
 
     ReportsModel::register(); // Cria a tabela de Reports
+    QuestionsModel::register(); // Cria a tabela de Perguntas
+
+
 
 }
 
