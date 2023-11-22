@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package LanceNoDigital.Medical-ILS-API-Plugin
  */
@@ -20,62 +21,81 @@
  */
 
 
-defined ('ABSPATH') or die ('Hey, what are you trying to do here?');
+defined('ABSPATH') or die('Hey, what are you trying to do here?');
 
-if (file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' )){
-  require_once dirname( __FILE__ ) . '/vendor/autoload.php';
+if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
+    require_once dirname(__FILE__) . '/vendor/autoload.php';
 }
 
-if ( ! defined( 'ILSAPI_JWT_URL' ) ) {
-	define( 'ILSAPI_JWT_URL', '/wp-json/jwt-auth/v1/token' );
+
+// ----------------------------------------------------------------
+// DEFINICÕES DE VARIÁVEIS GLOBAIS
+
+// Url de criação de token JWT
+if (!defined('LANCE_API_JWT_URL')) {
+    define('LANCE_API_JWT_URL', '/wp-json/jwt-auth/v1/token');
 }
 
-if ( ! defined( 'ILSAPI_SITEURL' ) ) {
-	define( 'ILSAPI_SITEURL', site_url() );
+// Site url
+if (!defined('LANCE_API_SITEURL')) {
+    define('LANCE_API_SITEURL', site_url());
 }
 
-class IlsApi{
+// Plugin Url Path.
+if (!defined('LANCE_API_PLUGIN_URL')) {
+    define('LANCE_API_PLUGIN_URL', plugin_dir_url(__FILE__));
+}
 
-  function __construct(){
+// Plugin Folder Path.
+if (!defined('LANCE_API_PLUGIN_DIR')) {
+    define('LANCE_API_PLUGIN_DIR', plugin_dir_path(__FILE__));
+}
+// ----------------------------------------------------------------
 
-  }
 
-  function activate(){
+class IlsApi
+{
 
-    src\services\Activation::register();
+    function __construct()
+    {
+    }
 
-  }
+    function activate()
+    {
 
-  function deactivate(){
+        src\services\Activation::register();
+    }
 
-  }
+    function deactivate()
+    {
+    }
 
-  function uninstall(){
+    function uninstall()
+    {
+    }
 
-  }
+    function register()
+    {
 
-  function register(){
-
-    src\routes\InitRoutes::register();
-
-  }
-
+        src\routes\InitRoutes::register();
+    }
 }
 
 
 if (class_exists('IlsApi')) {
-  $IlsApi = new IlsApi();
-  $IlsApi->register();
+    $IlsApi = new IlsApi();
+    $IlsApi->register();
 }
 
-register_activation_hook( __FILE__, array( $IlsApi , 'activate') );
-register_deactivation_hook( __FILE__, array( $IlsApi , 'deactivate') );
+register_activation_hook(__FILE__, array($IlsApi, 'activate'));
+register_deactivation_hook(__FILE__, array($IlsApi, 'deactivate'));
 
 
 
 // Function to JWT Token expire time
-function api_expire_token(){
-  return time() + (60*60*24); // 1d
+function api_expire_token()
+{
+    return time() + (60 * 60 * 24); // 1d
 }
 
 add_action('jwt_auth_expire', 'api_expire_token');
@@ -85,8 +105,3 @@ $plugin_dir = WP_PLUGIN_DIR . '/pdf-api';
 require_once($plugin_dir . "/endpoints/usuario_post.php");
 
 require_once($plugin_dir . "/custom-post-type/produto.php");
-
-
-
-
-?>

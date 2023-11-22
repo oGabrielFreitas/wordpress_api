@@ -1,0 +1,6 @@
+id_interno,categoria,pergunta,resposta_a,pontuacao_a,resposta_b,pontuacao_b,resposta_c,pontuacao_c
+1,Sono,Sonolência ao longo do dia,Intensa ou quase todos os dias.,-4,Em alguns dias da semana.,1,Não tenho ou sinto raramente.,3
+2,Sono,Satisfação com sono,Meu sono é ruim.,-5,Poderia dormir melhor.,-1,Durmo bem.,5
+3,Sono,Horas de sono (aproximadamente),Menos de 5 horas ou mais de 12 horas ao longo do dia. ,-5,Entre 5 e 7 horas. ,1,Mais de 7 horas.,3
+4,Sono,Risco de Síndrome da Apneia do Sono,Ronco e tenho apneias (interrupções na respiração) e/ou acordo cansado.,-3,Ronco ocasional.,-1,"Não ronco; consigo acordar revigorado na maior parte dos dias, sem apresentar sonolência ao longo do dia.",1
+5,Sono,Uso de hipnótico (medicamento para dormir),Uso medicamento para dormir.,-3,Uso medicamento ou bebida alcóolica para dormir pelo menos 1 a 2 vezes por semana.,-1,Não uso medicamento para dormir regularmente.,2
