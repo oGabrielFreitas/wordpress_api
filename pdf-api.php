@@ -26,6 +26,14 @@ if (file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' )){
   require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 }
 
+if ( ! defined( 'ILSAPI_JWT_URL' ) ) {
+	define( 'ILSAPI_JWT_URL', '/wp-json/jwt-auth/v1/token' );
+}
+
+if ( ! defined( 'ILSAPI_SITEURL' ) ) {
+	define( 'ILSAPI_SITEURL', site_url() );
+}
+
 class IlsApi{
 
   function __construct(){

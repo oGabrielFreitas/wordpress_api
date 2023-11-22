@@ -5,36 +5,33 @@
 
 namespace src\endpoints;
 
+use WP_REST_Request, WP_REST_Response, WP_Error;
 
 class UsersEndpoint{
 
-  //NOME DA TABELA
-  public static $table_name = 'ilsapi_reports';
 
-
-
-  public function login($request) {
+  public function login( WP_REST_Request $request ) {
 
 
     $username = sanitize_text_field($request['username']);
     $password = sanitize_text_field($request['password']);
+    $username = sanitize_user( $username );
+	  $password = trim( $password );
 
-    // // return rest_ensure_response("ola");
 
     // // Autentica o usuário
     $user = wp_authenticate($username, $password);
 
-    // // $user = "gabriel";
-
-    // return rest_ensure_response($user);
-
     if (is_wp_error($user)) {
         // Falha na autenticação, retorna código 401
-        return new WP_REST_Response(['message' => 'Falha na autenticação'], 401);
+        return new WP_REST_Response(['message' => 'Falha na autenticação (AUE1)'], 401);
     }
 
+    $site_url = site_url( );
+
     // Requisita o token JWT
-    $response = wp_remote_post('http://wpapilocal.local:10003/wp-json/jwt-auth/v1/token', array(
+    $response = wp_remote_post( ILSAPI_SITEURL . ILSAPI_JWT_URL , array(
+
         'method' => 'POST',
         'body'   => array(
             'username' => $username,
@@ -42,12 +39,9 @@ class UsersEndpoint{
         )
     ));
 
-    // return rest_ensure_response($response);
-
-
     if (is_wp_error($response)) {
         // Houve um erro na requisição, considerar o código apropriado para o erro
-        return new WP_REST_Response(['message' => 'Erro na requisição do token'], 400); // ou outro código conforme o erro
+        return new WP_REST_Response(['message' => 'Falha na autenticação (AUE2)'], 400); // ou outro código conforme o erro
     }
 
     $body = wp_remote_retrieve_body($response);
@@ -55,10 +49,11 @@ class UsersEndpoint{
 
     if (!empty($data->token)) {
         // Token JWT recebido com sucesso
-        return rest_ensure_response($data->token);
+        return rest_ensure_response($data);
+
     } else {
         // Falha ao receber o token, pode considerar retornar 401 ou outro código conforme a situação
-        return new WP_REST_Response(['message' => 'Falha ao obter o token'], 401);
+        return new WP_REST_Response(['message' => 'Falha ao obter o token (AUE3)'], 401);
     }
 
   }
