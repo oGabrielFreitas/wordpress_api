@@ -6,12 +6,14 @@
 
 namespace src\models;
 
+use src\helpers\InitiateData;
 
-class ReportsModel
+
+class QuestionsModel
 {
 
     //NOME DA TABELA
-    public static $table_name = 'lance_api_reports';
+    public static $table_name = 'lance_api_questions';
 
     // ESTRUTURA DA TABELA DENTRO DO BANCO DE DADOS
     private static function create_table()
@@ -27,11 +29,17 @@ class ReportsModel
         // if ($wpdb->get_var("SHOW TABLES LIKE '{$wp_table_name}'") != $wp_table_name) {
         $sql = "CREATE TABLE $wp_table_name (
 
-        id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-        nome tinytext NOT NULL,
-        idade int NOT NULL,
-        respostas LONGTEXT NOT NULL,
-        PRIMARY KEY  (id)
+      id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+      id_interno BIGINT(20) UNSIGNED,
+      categoria TEXT,
+      pergunta TEXT,
+      resposta_a TEXT,
+      pontuacao_a DECIMAL(5,2),
+      resposta_b TEXT,
+      pontuacao_b DECIMAL(5,2),
+      resposta_c TEXT,
+      pontuacao_c DECIMAL(5,2),
+      PRIMARY KEY  (id)
 
     ) $charset_collate;";
 
@@ -39,19 +47,25 @@ class ReportsModel
         dbDelta($sql);
         // }
 
+
     }
 
     // CHAMADA PARA CRIAR A TABELA
-    static public function register()
+    public static function register()
     {
+
+        // Cria a tabela
         self::create_table();
+
+        // Chama a função para importar dados após a criação da tabela
+        InitiateData::register(self::$table_name);
     }
 
     // ---------------------------------------------------------------------------
 
 
     // CRUD - CREATE (INSERT)
-    function create($nome, $idade, $respostas)
+    public static function create($data)
     {
         global $wpdb;
 
@@ -60,17 +74,24 @@ class ReportsModel
         $wpdb->insert(
             $tabela_nome,
             array(
-                'nome' => $nome,
-                'idade' => $idade,
-                'respostas' => $respostas
+                'id_interno' => $data['id_interno'],
+                'categoria' => $data['categoria'],
+                'pergunta' => $data['pergunta'],
+                'resposta_a' => $data['resposta_a'],
+                'pontuacao_a' => $data['pontuacao_a'],
+                'resposta_b' => $data['resposta_b'],
+                'pontuacao_b' => $data['pontuacao_b'],
+                'resposta_c' => $data['resposta_c'],
+                'pontuacao_c' => $data['pontuacao_c']
             ),
-            array('%s', '%d', '%s')
+            array('%s', '%s', '%s', '%f', '%s', '%f', '%s', '%f')
         );
     }
 
 
+
     // CRUD - UPDATE
-    function update($id, $nome, $idade, $respostas)
+    public static function update($id, $data)
     {
         global $wpdb;
 
@@ -79,15 +100,21 @@ class ReportsModel
         $wpdb->update(
             $tabela_nome,
             array(
-                'nome' => $nome,
-                'idade' => $idade,
-                'respostas' => $respostas
+                'categoria' => $data['categoria'],
+                'pergunta' => $data['pergunta'],
+                'resposta_a' => $data['resposta_a'],
+                'pontuacao_a' => $data['pontuacao_a'],
+                'resposta_b' => $data['resposta_b'],
+                'pontuacao_b' => $data['pontuacao_b'],
+                'resposta_c' => $data['resposta_c'],
+                'pontuacao_c' => $data['pontuacao_c']
             ),
             array('id' => $id),
-            array('%s', '%d', '%s'),
+            array('%s', '%s', '%s', '%f', '%s', '%f', '%s', '%f'),
             array('%d')
         );
     }
+
 
 
     // ---------------------------------------------------------------------------
@@ -95,7 +122,7 @@ class ReportsModel
 
 
     // CRUD - READ
-    function read($id)
+    public static function read($id)
     {
         global $wpdb;
 
@@ -106,7 +133,7 @@ class ReportsModel
 
 
     // CRUD - DELETE
-    function delete($id)
+    public static function delete($id)
     {
         global $wpdb;
 
@@ -116,7 +143,7 @@ class ReportsModel
     }
 
 
-    function list_all()
+    public static function list_all()
     {
         global $wpdb;
 

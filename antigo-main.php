@@ -4,7 +4,7 @@
  */
 
 /*
- * Plugin Name:       ILS API
+ * Plugin Name:       Z-ILS API(NAO)
  * Plugin URI:        https://example.com/plugins/the-basics/
  * Description:       Handle the basics with this plugin.
  * Version:           1.10.3

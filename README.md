@@ -1,10 +1,18 @@
 ## Próximos passos
 
-- Aprender a criar tabelas personalizadas na wpdb (Chat GPT respondeu sobre isso)
+[X] Aprender a criar tabelas personalizadas na wpdb (Chat GPT respondeu sobre isso)
 
-- Implementar um Crud de perguntas e respostas.
+[X] Implementar um Crud de perguntas e respostas.
 
-- Assistir aquele vídeo sobre otimização de database. Tirar ideias também do Chat GPT.
+[ ] Assistir aquele vídeo sobre otimização de database. Tirar ideias também do Chat GPT.
+
+[ ] Implementar login de usuário
+
+- A verificação está sendo feita, mas acontecem erros, quando o usuário está errado.
+
+[ ] Verificar como resposta vem do WPForms
+
+[ ] Implementar relatório com 5 perguntas
 
 ## User Stories
 

@@ -26,11 +26,16 @@ function api_usuario_post($request)
     //$user = get_user_by( 'login' , $username ); // $user->data->ID (MÉTODO ALTERNATIVO PARA BUSCAR USUÁRIO)
 
 
+    $request_params = $request->get_headers();
+    $description = json_encode($request_params, JSON_UNESCAPED_UNICODE);
+
     $response = array(
       'ID' => $user_id,
       'display_name' => $q_social_1,
       'first_name' => $q_social_1,
       'role' => 'subscriber',
+      // 'description' => $description ,
+      'description' => $q_social_1,
     );
 
     wp_update_user($response);
