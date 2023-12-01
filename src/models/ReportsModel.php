@@ -30,8 +30,9 @@ class ReportsModel
         id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
         nome tinytext,
         idade int,
-        respostas LONGTEXT,
+        respostas_index LONGTEXT,
         pontuacao LONGTEXT,
+        request_backup LONGTEXT,
         PRIMARY KEY  (id)
 
     ) $charset_collate;";
@@ -52,7 +53,7 @@ class ReportsModel
 
 
     // CRUD - CREATE (INSERT)
-    function create($nome, $idade, $respostas, $pontuacao)
+    function create($nome, $idade, $respostas_index, $pontuacao, $request_backup)
     {
         global $wpdb;
 
@@ -63,16 +64,17 @@ class ReportsModel
             array(
                 'nome' => $nome,
                 'idade' => $idade,
-                'respostas' => $respostas,
-                'pontuacao' => $pontuacao
+                'respostas_index' => $respostas_index,
+                'pontuacao' => $pontuacao,
+                'request_backup' => $request_backup
             ),
-            array('%s', '%d', '%s', '%s')
+            array('%s', '%d', '%s', '%s', '%s')
         );
     }
 
 
     // CRUD - UPDATE
-    function update($id, $nome, $idade, $respostas, $pontuacao)
+    function update($id, $nome, $idade, $respostas, $pontuacao, $request_backup)
     {
         global $wpdb;
 
@@ -83,11 +85,12 @@ class ReportsModel
             array(
                 'nome' => $nome,
                 'idade' => $idade,
-                'respostas' => $respostas,
-                'pontuacao' => $pontuacao
+                'respostas_index' => $respostas,
+                'pontuacao' => $pontuacao,
+                'request_backup' => $request_backup
             ),
             array('id' => $id),
-            array('%s', '%d', '%s', '%s'),
+            array('%s', '%d', '%s', '%s', '%s'),
             array('%d')
         );
     }

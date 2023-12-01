@@ -39,31 +39,19 @@ class ReportsEndpoint
         $question_list = QuestionsModel::list_all();
         // return rest_ensure_response($question_list);
 
-
-
-        // Para cada questão, preenche uma array, com o id_interno da questão
-        // Será usado depois para comprar com o json do request
-        // $id_list = [];
-        // $pontuacao_sono = 0;
-
-        // foreach ($question_list as $question) {
-        //     $id_list[] = $question['id_interno'];
-        // }
-
-
         // Terminar isso depois
         $pontuacao = array(
             'Sono' => 0,
             'Marcação' => 0
         );
 
-        $respostas = [];
+        $resposta_id_index = array();
 
 
         foreach ($question_list as $index => $question) {
 
             // Verifica se a resposta com id_interno está na requisição, se não pula o laço e vai para a próxima iteração.
-            if (!isset($question_list[$index]['id_interno'])) {
+            if (!isset($request[$question_list[$index]['id_interno']])) {
                 continue;
             }
 
@@ -81,17 +69,26 @@ class ReportsEndpoint
             // Soma a pontuação da resposta, dentro da array de pontuações, de acordo com a categoria.
             if ($indice_menor_valor == 0) {
                 $pontuacao[$question_list[$index]['categoria']] += $question_list[$index]['pontuacao_a'];
+                $resposta_id_index[$question_list[$index]['id_interno']] = 0;
             } elseif ($indice_menor_valor == 1) {
                 $pontuacao[$question_list[$index]['categoria']] += $question_list[$index]['pontuacao_b'];
+                $resposta_id_index[$question_list[$index]['id_interno']] = 1;
             } elseif ($indice_menor_valor == 2) {
                 $pontuacao[$question_list[$index]['categoria']] += $question_list[$index]['pontuacao_c'];
+                $resposta_id_index[$question_list[$index]['id_interno']] = 2;
             }
         }
 
         // -------------------------------------------------------------------------------------
 
+        // return rest_ensure_response($resposta_id_index);
 
-        // Salva o report no banco de dados. As respostas e pontuações vão em formato JSON.
+
+
+        // Salva o report no banco de dados. As respostas, pontuações e um backup da requisição vão em formato JSON.
+
+        // RESPOSTAS JSON
+        $respostas_json = json_encode($resposta_id_index);
 
         // PONTUAÇÃO JSON
         $pontuacao_json = json_encode($pontuacao);
@@ -100,7 +97,7 @@ class ReportsEndpoint
         $request_body = $request->get_body();
 
         // SALVA NO BANCO DE DADOS
-        (new ReportsModel())->create($nome, $idade, $request_body, $pontuacao_json);
+        (new ReportsModel())->create($nome, $idade, $respostas_json, $pontuacao_json, $request_body);
 
         return rest_ensure_response($pontuacao);
     }
