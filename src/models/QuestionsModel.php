@@ -13,7 +13,7 @@ class QuestionsModel
 {
 
     //NOME DA TABELA
-    public static $table_name = 'lance_api_questions';
+    public static string $table_name = 'lance_api_questions';
 
     // ESTRUTURA DA TABELA DENTRO DO BANCO DE DADOS
     private static function create_table()
@@ -29,17 +29,17 @@ class QuestionsModel
         // if ($wpdb->get_var("SHOW TABLES LIKE '{$wp_table_name}'") != $wp_table_name) {
         $sql = "CREATE TABLE $wp_table_name (
 
-      id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-      id_interno BIGINT(20) UNSIGNED,
-      categoria TEXT,
-      pergunta TEXT,
-      resposta_a TEXT,
-      pontuacao_a DECIMAL(5,2),
-      resposta_b TEXT,
-      pontuacao_b DECIMAL(5,2),
-      resposta_c TEXT,
-      pontuacao_c DECIMAL(5,2),
-      PRIMARY KEY  (id)
+            id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            id_interno TEXT,
+            categoria TEXT,
+            pergunta TEXT,
+            resposta_a TEXT,
+            pontuacao_a DECIMAL(5,2),
+            resposta_b TEXT,
+            pontuacao_b DECIMAL(5,2),
+            resposta_c TEXT,
+            pontuacao_c DECIMAL(5,2),
+            PRIMARY KEY  (id)
 
     ) $charset_collate;";
 

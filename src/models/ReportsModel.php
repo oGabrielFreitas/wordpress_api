@@ -28,9 +28,10 @@ class ReportsModel
         $sql = "CREATE TABLE $wp_table_name (
 
         id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-        nome tinytext NOT NULL,
-        idade int NOT NULL,
-        respostas LONGTEXT NOT NULL,
+        nome tinytext,
+        idade int,
+        respostas LONGTEXT,
+        pontuacao LONGTEXT,
         PRIMARY KEY  (id)
 
     ) $charset_collate;";
@@ -51,7 +52,7 @@ class ReportsModel
 
 
     // CRUD - CREATE (INSERT)
-    function create($nome, $idade, $respostas)
+    function create($nome, $idade, $respostas, $pontuacao)
     {
         global $wpdb;
 
@@ -62,15 +63,16 @@ class ReportsModel
             array(
                 'nome' => $nome,
                 'idade' => $idade,
-                'respostas' => $respostas
+                'respostas' => $respostas,
+                'pontuacao' => $pontuacao
             ),
-            array('%s', '%d', '%s')
+            array('%s', '%d', '%s', '%s')
         );
     }
 
 
     // CRUD - UPDATE
-    function update($id, $nome, $idade, $respostas)
+    function update($id, $nome, $idade, $respostas, $pontuacao)
     {
         global $wpdb;
 
@@ -81,10 +83,11 @@ class ReportsModel
             array(
                 'nome' => $nome,
                 'idade' => $idade,
-                'respostas' => $respostas
+                'respostas' => $respostas,
+                'pontuacao' => $pontuacao
             ),
             array('id' => $id),
-            array('%s', '%d', '%s'),
+            array('%s', '%d', '%s', '%s'),
             array('%d')
         );
     }
