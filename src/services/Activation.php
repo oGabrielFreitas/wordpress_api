@@ -30,7 +30,5 @@ class Activation
         ReportsModel::register(); // Cria a tabela de Reports
         QuestionsModel::register(); // Cria a tabela de Perguntas
 
-
-
     }
 }
