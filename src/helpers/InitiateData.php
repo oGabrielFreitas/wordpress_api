@@ -56,7 +56,7 @@ class InitiateData
                         'resposta_c' => $data[7],
                         'pontuacao_c' => $data[8]
                     ),
-                    array('%d', '%s', '%s', '%s', '%f', '%s', '%f', '%s', '%f')
+                    array('%s', '%s', '%s', '%s', '%f', '%s', '%f', '%s', '%f')
                 );
             }
 

@@ -8,11 +8,19 @@
 
 [ ] Implementar login de usuário
 
-- A verificação está sendo feita, mas acontecem erros, quando o usuário está errado.
+-   A verificação está sendo feita, mas acontecem erros, quando o usuário está errado.
 
-[ ] Verificar como resposta vem do WPForms
+[X] Verificar como resposta vem do WPForms (Vem em JSON normal)
 
-[ ] Implementar relatório com 5 perguntas
+[X] Implementar relatório com 5 perguntas
+
+[ ] Terminar de implementar todas perguntas e categorias (CSV e ReportsEndpoints)
+
+[ ] Implementar login front
+
+[X] Implementar listagem de relatórios e pontuações
+
+[ ] Adicionar data de criação do relatório no backend
 
 ## User Stories
 

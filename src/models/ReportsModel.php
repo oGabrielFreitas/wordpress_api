@@ -28,9 +28,11 @@ class ReportsModel
         $sql = "CREATE TABLE $wp_table_name (
 
         id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-        nome tinytext NOT NULL,
-        idade int NOT NULL,
-        respostas LONGTEXT NOT NULL,
+        nome tinytext,
+        idade int,
+        respostas_index LONGTEXT,
+        pontuacao LONGTEXT,
+        request_backup LONGTEXT,
         PRIMARY KEY  (id)
 
     ) $charset_collate;";
@@ -51,7 +53,7 @@ class ReportsModel
 
 
     // CRUD - CREATE (INSERT)
-    function create($nome, $idade, $respostas)
+    function create($nome, $idade, $respostas_index, $pontuacao, $request_backup)
     {
         global $wpdb;
 
@@ -62,15 +64,17 @@ class ReportsModel
             array(
                 'nome' => $nome,
                 'idade' => $idade,
-                'respostas' => $respostas
+                'respostas_index' => $respostas_index,
+                'pontuacao' => $pontuacao,
+                'request_backup' => $request_backup
             ),
-            array('%s', '%d', '%s')
+            array('%s', '%d', '%s', '%s', '%s')
         );
     }
 
 
     // CRUD - UPDATE
-    function update($id, $nome, $idade, $respostas)
+    function update($id, $nome, $idade, $respostas, $pontuacao, $request_backup)
     {
         global $wpdb;
 
@@ -81,10 +85,12 @@ class ReportsModel
             array(
                 'nome' => $nome,
                 'idade' => $idade,
-                'respostas' => $respostas
+                'respostas_index' => $respostas,
+                'pontuacao' => $pontuacao,
+                'request_backup' => $request_backup
             ),
             array('id' => $id),
-            array('%s', '%d', '%s'),
+            array('%s', '%d', '%s', '%s', '%s'),
             array('%d')
         );
     }
@@ -92,6 +98,8 @@ class ReportsModel
 
     // ---------------------------------------------------------------------------
     // PADRÃO PARA TODOS QUE USAM ID COMO PRIMARY KEY
+
+    // Nesta implementação em específico, não estou retornando o request_backup em READ e LIST
 
 
     // CRUD - READ
@@ -101,7 +109,7 @@ class ReportsModel
 
         $tabela_nome = $wpdb->prefix . self::$table_name;
 
-        return $wpdb->get_row($wpdb->prepare("SELECT * FROM $tabela_nome WHERE id = %d", $id), ARRAY_A);
+        return $wpdb->get_row($wpdb->prepare("SELECT id, nome, idade, respostas_index, pontuacao FROM $tabela_nome WHERE id = %d", $id), ARRAY_A);
     }
 
 
@@ -122,6 +130,9 @@ class ReportsModel
 
         $tabela_nome = $wpdb->prefix . self::$table_name;
 
-        return $wpdb->get_results("SELECT * FROM $tabela_nome", ARRAY_A);
+        // Especificando as colunas que você deseja retornar
+        $sql = "SELECT id, nome, idade, respostas_index, pontuacao FROM $tabela_nome";
+
+        return $wpdb->get_results($sql, ARRAY_A);
     }
 }
