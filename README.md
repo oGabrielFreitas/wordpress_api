@@ -20,7 +20,9 @@
 
 [X] Implementar listagem de relatórios e pontuações
 
-[ ] Adicionar data de criação do relatório no backend
+[ ] Adicionar data de criação do relatório no backend e última alteração
+
+[X] Colocar em respostas, mais infos, vou usar apenas o backend para gerar texto (id, categoria, Pergunta, resposta, pontuação, index(A,B,C))
 
 ## User Stories
 
