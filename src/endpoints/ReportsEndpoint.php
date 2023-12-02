@@ -40,10 +40,7 @@ class ReportsEndpoint
         // return rest_ensure_response($question_list);
 
         // Terminar isso depois
-        $pontuacao = array(
-            'Sono' => 0,
-            'Marcação' => 0
-        );
+        $pontuacao = array();
 
         $resposta_id_index = array();
 

@@ -18,7 +18,9 @@
 
 [ ] Implementar login front
 
-[ ] Implementar listagem de relatórios e pontuações
+[X] Implementar listagem de relatórios e pontuações
+
+[ ] Adicionar data de criação do relatório no backend
 
 ## User Stories
 

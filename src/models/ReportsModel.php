@@ -99,6 +99,8 @@ class ReportsModel
     // ---------------------------------------------------------------------------
     // PADRÃO PARA TODOS QUE USAM ID COMO PRIMARY KEY
 
+    // Nesta implementação em específico, não estou retornando o request_backup em READ e LIST
+
 
     // CRUD - READ
     function read($id)
@@ -107,7 +109,7 @@ class ReportsModel
 
         $tabela_nome = $wpdb->prefix . self::$table_name;
 
-        return $wpdb->get_row($wpdb->prepare("SELECT * FROM $tabela_nome WHERE id = %d", $id), ARRAY_A);
+        return $wpdb->get_row($wpdb->prepare("SELECT id, nome, idade, respostas_index, pontuacao FROM $tabela_nome WHERE id = %d", $id), ARRAY_A);
     }
 
 
@@ -128,6 +130,9 @@ class ReportsModel
 
         $tabela_nome = $wpdb->prefix . self::$table_name;
 
-        return $wpdb->get_results("SELECT * FROM $tabela_nome", ARRAY_A);
+        // Especificando as colunas que você deseja retornar
+        $sql = "SELECT id, nome, idade, respostas_index, pontuacao FROM $tabela_nome";
+
+        return $wpdb->get_results($sql, ARRAY_A);
     }
 }

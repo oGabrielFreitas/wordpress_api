@@ -35,14 +35,14 @@ class ReportsRoutes
             register_rest_route('api', '/reports/read', array(
                 'methods' => 'GET',
                 'callback' => [new ReportsEndpoint(), 'read'],
-                'permission_callback' => [new ValidateJWT(), 'is_validated'], // Apenas usuários logados
+                // 'permission_callback' => [new ValidateJWT(), 'is_validated'], // Apenas usuários logados
             ));
 
             // LISTA TODOS RELATÓRIO
             register_rest_route('api', '/reports/list', array(
                 'methods' => 'GET',
                 'callback' => [new ReportsEndpoint(), 'list'],
-                'permission_callback' => [new ValidateJWT(), 'is_validated'], // Apenas usuários logados
+                // 'permission_callback' => [new ValidateJWT(), 'is_validated'], // Apenas usuários logados
 
             ));
         });
