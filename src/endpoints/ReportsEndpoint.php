@@ -10,6 +10,8 @@ use src\models\ReportsModel;
 use src\helpers\ScoreCalculator;
 use src\models\QuestionsModel;
 
+use WP_REST_Request, WP_REST_Response, WP_Error;
+
 
 class ReportsEndpoint
 {
@@ -42,22 +44,35 @@ class ReportsEndpoint
         // Laço que verifica respostas
         foreach ($question_list as $index => $question) {
 
+
             // Verifica se a resposta com id_interno está na requisição, se não pula o laço e vai para a próxima iteração.
-            if (!isset($request[$question_list[$index]['id_interno']])) {
+            if (!isset($request[$question['id_interno']])) {
                 continue;
             }
 
-            // Define variáveis do loop atual
-            $pergunta_atual = $question_list[$index]['pergunta'];
+            // // Define variáveis do loop atual
+            // $pergunta_atual = $question_list[$index]['pergunta'];
 
-            $id_interno_atual = $question_list[$index]['id_interno'];
-            $categoria_atual = $question_list[$index]['categoria'];
+            // $id_interno_atual = $question_list[$index]['id_interno'];
+            // $categoria_atual = $question_list[$index]['categoria'];
+
+            // $resposta_requisicao = sanitize_text_field($request[$id_interno_atual]);
+
+            // $resposta_A_atual = $question_list[$index]['resposta_a'];
+            // $resposta_B_atual = $question_list[$index]['resposta_b'];
+            // $resposta_C_atual = $question_list[$index]['resposta_c'];
+
+            // Define variáveis do loop atual
+            $pergunta_atual = $question['pergunta'];
+
+            $id_interno_atual = $question['id_interno'];
+            $categoria_atual = $question['categoria'];
 
             $resposta_requisicao = sanitize_text_field($request[$id_interno_atual]);
 
-            $resposta_A_atual = $question_list[$index]['resposta_a'];
-            $resposta_B_atual = $question_list[$index]['resposta_b'];
-            $resposta_C_atual = $question_list[$index]['resposta_c'];
+            $resposta_A_atual = $question['resposta_a'];
+            $resposta_B_atual = $question['resposta_b'];
+            $resposta_C_atual = $question['resposta_c'];
 
 
 
@@ -76,34 +91,43 @@ class ReportsEndpoint
 
             // Soma a pontuação da resposta, dentro da array de pontuações, de acordo com a categoria. Salva array de respostas
             if ($indice_menor_valor == 0) {
-                $pontuacao[$categoria_atual] += $question_list[$index]['pontuacao_a'];
-                $respostas[$id_interno_atual] = array(
-                    'id_interno' => $id_interno_atual,
-                    'categoria' => $categoria_atual,
-                    'pergunta' => $pergunta_atual,
-                    'resposta' => $resposta_A_atual,
-                    'pontuacao' => $question_list[$index]['pontuacao_a'],
-                    'index_reposta' => $indice_menor_valor
+                $pontuacao[$categoria_atual] += $question['pontuacao_a'];
+                array_push(
+                    $respostas,
+                    array(
+                        'id_interno' => $id_interno_atual,
+                        'categoria' => $categoria_atual,
+                        'pergunta' => $pergunta_atual,
+                        'resposta' => $resposta_A_atual,
+                        'pontuacao' => $question['pontuacao_a'],
+                        'index_reposta' => $indice_menor_valor
+                    )
                 );
             } elseif ($indice_menor_valor == 1) {
-                $pontuacao[$categoria_atual] += $question_list[$index]['pontuacao_b'];
-                $respostas[$id_interno_atual] = array(
-                    'id_interno' => $id_interno_atual,
-                    'categoria' => $categoria_atual,
-                    'pergunta' => $pergunta_atual,
-                    'resposta' => $resposta_B_atual,
-                    'pontuacao' => $question_list[$index]['pontuacao_b'],
-                    'index_reposta' => $indice_menor_valor
+                $pontuacao[$categoria_atual] += $question['pontuacao_b'];
+                array_push(
+                    $respostas,
+                    array(
+                        'id_interno' => $id_interno_atual,
+                        'categoria' => $categoria_atual,
+                        'pergunta' => $pergunta_atual,
+                        'resposta' => $resposta_A_atual,
+                        'pontuacao' => $question['pontuacao_a'],
+                        'index_reposta' => $indice_menor_valor
+                    )
                 );
             } elseif ($indice_menor_valor == 2) {
-                $pontuacao[$categoria_atual] += $question_list[$index]['pontuacao_c'];
-                $respostas[$id_interno_atual] = array(
-                    'id_interno' => $id_interno_atual,
-                    'categoria' => $categoria_atual,
-                    'pergunta' => $pergunta_atual,
-                    'resposta' => $resposta_C_atual,
-                    'pontuacao' => $question_list[$index]['pontuacao_c'],
-                    'index_reposta' => $indice_menor_valor
+                $pontuacao[$categoria_atual] += $question['pontuacao_c'];
+                array_push(
+                    $respostas,
+                    array(
+                        'id_interno' => $id_interno_atual,
+                        'categoria' => $categoria_atual,
+                        'pergunta' => $pergunta_atual,
+                        'resposta' => $resposta_A_atual,
+                        'pontuacao' => $question['pontuacao_a'],
+                        'index_reposta' => $indice_menor_valor
+                    )
                 );
             }
         }
@@ -132,11 +156,20 @@ class ReportsEndpoint
     public function read($request)
     {
 
-        $id = sanitize_text_field($request['id']);
+        $id = filter_var($request->get_param('id'), FILTER_SANITIZE_NUMBER_INT);
 
         $response = (new ReportsModel())->read($id);
 
-        return rest_ensure_response($response);
+        if ($response) {
+            return new WP_REST_Response($response, 200);
+        } else {
+            return new WP_REST_Response(['message' => 'Relatório não encontrado'], 404);
+        }
+
+
+
+
+        // return rest_ensure_response($response);
     }
 
 

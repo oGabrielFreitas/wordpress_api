@@ -32,7 +32,7 @@ class ReportsRoutes
             ));
 
             // BUSCA 1 RELATÓRIO
-            register_rest_route('api', '/reports/read', array(
+            register_rest_route('api', '/reports/read/(?P<id>\d+)', array(
                 'methods' => 'GET',
                 'callback' => [new ReportsEndpoint(), 'read'],
                 // 'permission_callback' => [new ValidateJWT(), 'is_validated'], // Apenas usuários logados
