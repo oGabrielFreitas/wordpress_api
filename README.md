@@ -14,13 +14,25 @@
 
 [X] Implementar relatório com 5 perguntas
 
-[ ] Terminar de implementar todas perguntas e categorias (CSV e ReportsEndpoints)
+[X] Terminar de implementar todas perguntas e categorias (CSV e ReportsEndpoints)
 
 [ ] Implementar login front
 
 [X] Implementar listagem de relatórios e pontuações
 
-[ ] Adicionar data de criação do relatório no backend
+[X] Adicionar data de criação do relatório no backend e última alteração
+
+[X] Colocar em respostas, mais infos, vou usar apenas o backend para gerar texto (id, categoria, Pergunta, resposta, pontuação, index(A,B,C))
+
+[X] Implementar campo de email em relatórios.
+
+[ ] Página de Login
+
+[ ] Ícones das sessões
+
+[ ] Tabela de todos usuários
+
+[ ] Rotas React
 
 ## User Stories
 
