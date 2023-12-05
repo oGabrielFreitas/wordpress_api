@@ -28,6 +28,7 @@ class ReportsEndpoint
 
         // Os sanitize é uma função do Wordpress que evita entradas maliciosas
         $nome = sanitize_text_field($request['nome']);
+        $email = sanitize_email($request['email']);
         $idade = sanitize_text_field($request['idade']);
 
 
@@ -111,8 +112,8 @@ class ReportsEndpoint
                         'id_interno' => $id_interno_atual,
                         'categoria' => $categoria_atual,
                         'pergunta' => $pergunta_atual,
-                        'resposta' => $resposta_A_atual,
-                        'pontuacao' => $question['pontuacao_a'],
+                        'resposta' => $resposta_B_atual,
+                        'pontuacao' => $question['pontuacao_b'],
                         'index_reposta' => $indice_menor_valor
                     )
                 );
@@ -124,8 +125,8 @@ class ReportsEndpoint
                         'id_interno' => $id_interno_atual,
                         'categoria' => $categoria_atual,
                         'pergunta' => $pergunta_atual,
-                        'resposta' => $resposta_A_atual,
-                        'pontuacao' => $question['pontuacao_a'],
+                        'resposta' => $resposta_C_atual,
+                        'pontuacao' => $question['pontuacao_c'],
                         'index_reposta' => $indice_menor_valor
                     )
                 );
@@ -148,7 +149,7 @@ class ReportsEndpoint
         $request_body = sanitize_text_field($request_body);
 
         // SALVA NO BANCO DE DADOS
-        (new ReportsModel())->create($nome, $idade, $respostas_json, $pontuacao_json, $request_body);
+        (new ReportsModel())->create($nome, $email, $idade, $respostas_json, $pontuacao_json, $request_body);
 
         return rest_ensure_response($pontuacao);
     }
@@ -165,11 +166,6 @@ class ReportsEndpoint
         } else {
             return new WP_REST_Response(['message' => 'Relatório não encontrado'], 404);
         }
-
-
-
-
-        // return rest_ensure_response($response);
     }
 
 

@@ -16,32 +16,28 @@ class ReportsModel
     // ESTRUTURA DA TABELA DENTRO DO BANCO DE DADOS
     private static function create_table()
     {
-
         global $wpdb;
 
         $wp_table_name = $wpdb->prefix . self::$table_name;
-
         $charset_collate = $wpdb->get_charset_collate();
 
-        // Verifica se a tabela já existe
-        // if ($wpdb->get_var("SHOW TABLES LIKE '{$wp_table_name}'") != $wp_table_name) {
         $sql = "CREATE TABLE $wp_table_name (
-                id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-                nome tinytext,
-                idade int,
-                respostas LONGTEXT,
-                pontuacao LONGTEXT,
-                request_backup LONGTEXT,
-                data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-                data_edicao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                PRIMARY KEY  (id)
-            ) $charset_collate;";
+            id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            nome tinytext,
+            idade int,
+            email VARCHAR(255),
+            respostas LONGTEXT,
+            pontuacao LONGTEXT,
+            request_backup LONGTEXT,
+            data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+            data_edicao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            PRIMARY KEY  (id)
+        ) $charset_collate;";
 
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
-        // }
-
     }
+
 
     // CHAMADA PARA CRIAR A TABELA
     static public function register()
@@ -53,7 +49,7 @@ class ReportsModel
 
 
     // CRUD - CREATE (INSERT)
-    function create($nome, $idade, $respostas, $pontuacao, $request_backup)
+    function create($nome, $email, $idade, $respostas, $pontuacao, $request_backup)
     {
         global $wpdb;
 
@@ -63,18 +59,19 @@ class ReportsModel
             $tabela_nome,
             array(
                 'nome' => $nome,
+                'email' => $email,
                 'idade' => $idade,
                 'respostas' => $respostas,
                 'pontuacao' => $pontuacao,
                 'request_backup' => $request_backup
             ),
-            array('%s', '%d', '%s', '%s', '%s')
+            array('%s', '%s', '%d', '%s', '%s', '%s')
         );
     }
 
 
     // CRUD - UPDATE
-    function update($id, $nome, $idade, $respostas, $pontuacao, $request_backup)
+    function update($id, $nome, $email, $idade, $respostas, $pontuacao, $request_backup)
     {
         global $wpdb;
 
@@ -84,12 +81,13 @@ class ReportsModel
             $tabela_nome,
             array(
                 'nome' => $nome,
+                'email' => $email,
                 'idade' => $idade,
                 'respostas' => $respostas,
                 'pontuacao' => $pontuacao,
             ),
             array('id' => $id),
-            array('%s', '%d', '%s', '%s', '%s'),
+            array('%s', '%s', '%d', '%s', '%s', '%s'),
             array('%d')
         );
     }
@@ -108,7 +106,7 @@ class ReportsModel
 
         $tabela_nome = $wpdb->prefix . self::$table_name;
 
-        return $wpdb->get_row($wpdb->prepare("SELECT id, nome, idade, respostas, pontuacao, data_criacao, data_edicao FROM $tabela_nome WHERE id = %d", $id), ARRAY_A);
+        return $wpdb->get_row($wpdb->prepare("SELECT id, nome, email, idade, respostas, pontuacao, data_criacao, data_edicao FROM $tabela_nome WHERE id = %d", $id), ARRAY_A);
     }
 
 
@@ -130,7 +128,7 @@ class ReportsModel
         $tabela_nome = $wpdb->prefix . self::$table_name;
 
         // Especificando as colunas que você deseja retornar
-        $sql = "SELECT id, nome, idade, respostas, pontuacao, data_criacao, data_edicao FROM $tabela_nome";
+        $sql = "SELECT id, nome, email, idade, respostas, pontuacao, data_criacao, data_edicao FROM $tabela_nome";
 
         return $wpdb->get_results($sql, ARRAY_A);
     }
