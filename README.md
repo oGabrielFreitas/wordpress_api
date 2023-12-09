@@ -26,13 +26,15 @@
 
 [X] Implementar campo de email em relatórios.
 
+[X] Ícones das sessões
+
+[X] Tabela de todos usuários (pesquisa)
+
+[X] Rotas React
+
 [ ] Página de Login
 
-[ ] Ícones das sessões
-
-[ ] Tabela de todos usuários
-
-[ ] Rotas React
+[ ] Implementar drop table da tabela de questões
 
 ## User Stories
 

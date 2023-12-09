@@ -54,6 +54,9 @@ class QuestionsModel
     public static function register()
     {
 
+        // Apaga tabela se já existir
+        self::drop_table();
+
         // Cria a tabela
         self::create_table();
 
@@ -150,5 +153,19 @@ class QuestionsModel
         $tabela_nome = $wpdb->prefix . self::$table_name;
 
         return $wpdb->get_results("SELECT * FROM $tabela_nome", ARRAY_A);
+    }
+
+
+    private static function drop_table()
+    {
+        global $wpdb;
+
+        $wp_table_name = $wpdb->prefix . self::$table_name;
+
+        // Verifica se a tabela já existe, se existe, apaga ela
+        if ($wpdb->get_var("SHOW TABLES LIKE '{$wp_table_name}'") == $wp_table_name) {
+            $sql = "DROP TABLE IF EXISTS $wp_table_name";
+            $wpdb->query($sql);
+        }
     }
 }
